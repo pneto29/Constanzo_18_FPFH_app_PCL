@@ -96,30 +96,6 @@ main (int argc, char **argv)
     align.align (*object_aligned);
   }
 
-  if (align.hasConverged ())
-  {
-    // Print results
-    printf ("\n");
-    Eigen::Matrix4f transformation = align.getFinalTransformation ();
-    pcl::console::print_info ("    | %6.3f %6.3f %6.3f | \n", transformation (0,0), transformation (0,1), transformation (0,2));
-    pcl::console::print_info ("R = | %6.3f %6.3f %6.3f | \n", transformation (1,0), transformation (1,1), transformation (1,2));
-    pcl::console::print_info ("    | %6.3f %6.3f %6.3f | \n", transformation (2,0), transformation (2,1), transformation (2,2));
-    pcl::console::print_info ("\n");
-    pcl::console::print_info ("t = < %0.3f, %0.3f, %0.3f >\n", transformation (0,3), transformation (1,3), transformation (2,3));
-    pcl::console::print_info ("\n");
-    pcl::console::print_info ("Inliers: %i/%i\n", align.getInliers ().size (), object->size ());
-
-    // Show alignment
-    pcl::visualization::PCLVisualizer visu("Alignment");
-    visu.addPointCloud (scene, ColorHandlerT (scene, 0.0, 255.0, 0.0), "scene");
-    visu.addPointCloud (object_aligned, ColorHandlerT (object_aligned, 0.0, 0.0, 255.0), "object_aligned");
-    visu.spin ();
-  }
-  else
-  {
-    pcl::console::print_error ("Alignment failed!\n");
-    return (1);
-  }
-
+  
   return (0);
 }
