@@ -12,6 +12,7 @@
 #include <pcl/registration/sample_consensus_prerejective.h>
 #include <pcl/segmentation/sac_segmentation.h>
 #include <pcl/visualization/pcl_visualizer.h>
+#include <time.h>
 
 // Types
 typedef pcl::PointNormal PointNT;
@@ -31,7 +32,8 @@ main (int argc, char **argv)
   PointCloudT::Ptr scene (new PointCloudT);
   FeatureCloudT::Ptr object_features (new FeatureCloudT);
   FeatureCloudT::Ptr scene_features (new FeatureCloudT);
-
+  
+   clock_t start=clock();
   // Get input object and scene
   if (argc != 3)
   {
@@ -95,7 +97,9 @@ main (int argc, char **argv)
     pcl::ScopeTime t("Alignment");
     align.align (*object_aligned);
   }
+   clock_t sac_time=clock();
+     cout<<"sac time: "<<(double)(sac_time-start)/(double)CLOCKS_PER_SEC<<" s"<<endl;
+  //   pcl::io::savePCDFileASCII(argv[3], *object_aligned);
 
-  
   return (0);
 }
